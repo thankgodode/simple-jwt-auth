@@ -19,9 +19,10 @@ router.route('/login').post((req, res) => {
         const aToken = accessToken(username);
 
         res.cookie("token", rToken, {
-            withCredentials: true,
             httpOnly: true,
-            // sameSite: "Lax",
+            sameSite: "lax",
+            secure: true,        // required when sameSite is cross-site or on HTTPS
+            maxAge: 7 * 24 * 60 * 60 * 1000  // optional: 7 days in ms
         });
         res.json({ message: 'Login successful', token: aToken });
 
