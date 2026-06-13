@@ -12,7 +12,7 @@ const server = http.createServer(app);
 const port = process.env.PORT || 3000;
 
 const corsOption = {
-    origin:"*",
+    origin:"https://simple-jwt-auth-3.onrender.com",
     credentials:true,
     optionSuccessStatus:200,
 }
