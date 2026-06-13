@@ -20,7 +20,7 @@ router.route('/login').post((req, res) => {
 
         res.cookie("token", rToken, {
             httpOnly: true,
-            sameSite: "lax",
+            sameSite: "none",
             secure: true,        // required when sameSite is cross-site or on HTTPS
             maxAge: 7 * 24 * 60 * 60 * 1000  // optional: 7 days in ms
         });
