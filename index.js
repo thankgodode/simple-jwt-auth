@@ -9,23 +9,23 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const server = http.createServer(app);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 const corsOption = {
     origin:"http://localhost:3000",
     credentials:true,
-    optionsSuccessStatus: 200
 }
 
+app.use(express.json());
 app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(cors(corsOption))
+app.use(cors(corsOption));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/", require("./routes/auth"))
 app.use("/", require("./routes/refreshToken"))
 
 
-app.get("/dashboard",require("./middleware/authMiddleware"), (req, res) => {
+app.get("/dashboard", require("./middleware/authMiddleware"), (req, res) => {
     res.json({msg:"Welcome to the dashboard", user:req.user.username})
 })
 

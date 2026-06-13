@@ -1,25 +1,19 @@
 const jwt = require("jsonwebtoken");
 
-const userVerification = async (req, res, next) => {
-  const authHeader = req.headers['authorization']
+const userVerification = (req, res, next) => {
+    const token = req.headers.authorization?.split(" ")[1]; // handle "Bearer <token>"
 
-  console.log("Auth header ", authHeader)
-
-  if (!authHeader) return res.status(403).json({ msg: "Forbidden" })
-  
-  const token = authHeader.split(" ")[1]
-  jwt.verify(
-    token,
-    process.env.SECRET_KEY,
-    async (err, decoded) => {
-      if(err) return res.sendStatus(401).json({ msg: "Unauthorized" })
-      
-        req.user = decoded;
-
-        next()
+    if (!token) {
+        return res.status(401).json({ message: "No token provided" });
     }
-  )
 
+    jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+        if (err) {
+          return res.status(403).json({ message: "Invalid or expired token" });
+        }
+        req.user = user;
+        next();
+    });
 };
 
-module.exports = userVerification
+module.exports = userVerification;
