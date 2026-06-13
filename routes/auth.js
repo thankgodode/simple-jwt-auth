@@ -19,7 +19,7 @@ router.route('/login').post((req, res) => {
         const aToken = accessToken(username);
 
         res.cookie("token", rToken, {
-            // withCredentials: true,
+            withCredentials: true,
             httpOnly: true,
             // sameSite: "Lax",
         });
