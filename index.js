@@ -12,9 +12,9 @@ const server = http.createServer(app);
 const port = process.env.PORT || 3000;
 
 const corsOption = {
-    origin:"https://simple-jwt-auth-3.onrender.com",
+    origin:"http://localhost:3000",
     credentials:true,
-    optionSuccessStatus:200,
+    optionsSuccessStatus: 200
 }
 
 app.use(cookieParser());
