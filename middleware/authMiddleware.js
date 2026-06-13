@@ -5,15 +5,14 @@ const userVerification = async (req, res, next) => {
 
   console.log("Auth header ", authHeader)
 
-  if (!authHeader) return res.status(403).json({ msg: "Unauthorized" })
+  if (!authHeader) return res.status(403).json({ msg: "Forbidden" })
   
   const token = authHeader.split(" ")[1]
   jwt.verify(
     token,
     process.env.SECRET_KEY,
     async (err, decoded) => {
-      console.log("User verification middleware",err)
-      if(err) return res.sendStatus(403)
+      if(err) return res.sendStatus(401).json({ msg: "Unauthorized" })
       
         req.user = decoded;
 
